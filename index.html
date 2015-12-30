@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>chat</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <style>
+    body{
+      background-color: red;
+    }
+    #chat{
+      width: 300px;
+      height: 100%;
+      margin: 5px;
+      padding: 5px;
+      border: 2px solid #fff;
+      background-color: green;
+
+    }
+
+    #send-message{
+      width: 300px;
+      height: 300px;
+      border: 2px solid #fff;
+      background-color: orange;
+
+    }
+    
+  </style>
+</head>
+<body>
+      
+      <center>
+      ESCRIBE AQUI:
+        <form id="send-message">
+          <center><input type="text" id="message" />
+          <input type="submit" id="boton"/>
+        </form> 
+      </center>
+      <div id="chat"></div> 
+  
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    function iniciar (){
+      socket=io.connect();
+      messageForm=document.getElementById('send-message');
+      messageBox=document.getElementById('message');
+      chat=document.getElementById('chat');
+
+      messageForm.addEventListener('submit',function(e){
+        //quito el funcionamiento del navegador e.preventDefault();
+        e.preventDefault();
+        //envio los datos al server.js
+       socket.emit('send message',messageBox.value);
+       //limpio el mensaje del input text
+       messageBox.value='';
+
+      });
+      //retorno el dato del servidor
+      socket.on('new message',function(data){
+        chat.innerHTML +=data+'<br/>';
+
+      });
+      
+    }
+
+    //se carga todo los elementos
+    window.addEventListener('load',iniciar,false);
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Socket.IO Chat Example</title>
+  <style type="text/css">
+  body{
+    background-color: #222;
+    color: #ccc;
+    font-size: 32px;
+    text-align: center;
+
+  }
+
+
+  </style>
+  
+</head>
+<body>
+  
+  <form id="form_envio">
+    <input id="datos"  placeholder="escribe"/>
+    <input type="submit" value="enviar"/>
+
+  </form>
+  <div id="recibir"></div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
+  <script type="text/javascript">
+  var webSocket =io.connect("http://127.0.0.1:3000");
+
+  $(document).on("ready",inicio);
+  function inicio () {
+    // body...
+    $('#form_envio').on('submit',enviar_datos);
+    webSocket.on('datos_servidor',recibir_datos);
+  }
+
+  function enviar_datos (e){
+    e.preventDefault();
+    var dato= $('#form_envio').find('#datos').val();
+    webSocket.emit("datos_cliente",dato);
+  }
+
+  function recibir_datos(data){
+      $('#recibir').append(data);
+  }
+
+
+
+  </script>
+</body>
+</html>
+
+-->
